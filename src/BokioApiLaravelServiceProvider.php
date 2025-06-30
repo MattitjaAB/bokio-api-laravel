@@ -2,7 +2,6 @@
 
 namespace Mattitja\BokioApiLaravel;
 
-use Mattitja\BokioApiLaravel\Commands\BokioApiLaravelCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -17,9 +16,6 @@ class BokioApiLaravelServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('bokio-api-laravel')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_bokio_api_laravel_table')
-            ->hasCommand(BokioApiLaravelCommand::class);
+            ->hasConfigFile();
     }
 }
