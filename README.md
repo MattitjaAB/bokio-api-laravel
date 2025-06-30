@@ -1,84 +1,87 @@
-# A Laravel wrapper for the Bokio API
+# Bokio API Wrapper for Laravel
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/mattitjaab/bokio-api-laravel.svg?style=flat-square)](https://packagist.org/packages/mattitjaab/bokio-api-laravel)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/mattitjaab/bokio-api-laravel/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/mattitjaab/bokio-api-laravel/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/mattitjaab/bokio-api-laravel/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/mattitjaab/bokio-api-laravel/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Tests](https://img.shields.io/github/actions/workflow/status/mattitjaab/bokio-api-laravel/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/mattitjaab/bokio-api-laravel/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![Code Style](https://img.shields.io/github/actions/workflow/status/mattitjaab/bokio-api-laravel/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/mattitjaab/bokio-api-laravel/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/mattitjaab/bokio-api-laravel.svg?style=flat-square)](https://packagist.org/packages/mattitjaab/bokio-api-laravel)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+A simple and elegant Laravel wrapper for the [Bokio API](https://bokio.se). This package allows you to interact with Bokio programmatically using clean, Laravel-friendly syntax.
 
-## Support us
+## Features
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/bokio-api-laravel.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/bokio-api-laravel)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
+- Handles authentication using integration token and company ID
+- Easily fetch customers, create invoices, and more
+- Extensible and testable design using Laravel's HTTP client
 
 ## Installation
 
-You can install the package via composer:
+Install the package via Composer:
 
 ```bash
 composer require mattitjaab/bokio-api-laravel
 ```
 
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="bokio-api-laravel-migrations"
-php artisan migrate
-```
-
-You can publish the config file with:
+Publish the configuration file:
 
 ```bash
 php artisan vendor:publish --tag="bokio-api-laravel-config"
 ```
 
-This is the contents of the published config file:
+This will create a `config/bokio.php` file where you can define:
 
 ```php
 return [
+    'token' => env('BOKIO_TOKEN'),
+    'company_id' => env('BOKIO_COMPANY_ID'),
 ];
 ```
 
-Optionally, you can publish the views using
+Make sure to set your `.env` file accordingly:
 
-```bash
-php artisan vendor:publish --tag="bokio-api-laravel-views"
+```dotenv
+BOKIO_TOKEN=your-token-here
+BOKIO_COMPANY_ID=your-company-id
 ```
 
 ## Usage
 
+You can resolve the Bokio client using the service container:
+
 ```php
-$bokioApiLaravel = new Mattitja\BokioApiLaravel();
-echo $bokioApiLaravel->echoPhrase('Hello, Mattitja!');
+$bokio = app(\Mattitja\BokioApiLaravel\Bokio::class);
+
+// Fetch all customers
+$customers = $bokio->customers()->all();
+
+// Create a customer
+$bokio->customers()->create([
+    'name' => 'New Company AB',
+    'type' => 'company',
+    'address' => [
+        'line1' => 'Main Street 1',
+        'city' => 'Stockholm',
+        'postalCode' => '11122',
+        'country' => 'SE',
+    ],
+]);
 ```
 
 ## Testing
+
+Run the test suite with:
 
 ```bash
 composer test
 ```
 
-## Changelog
-
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
-
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Contributions are welcome! Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-## Security Vulnerabilities
+## Security
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
-
-## Credits
-
-- [Mattitja AB](https://github.com/MattitjaAB)
-- [All Contributors](../../contributors)
+If you discover a security vulnerability, please follow [our security policy](../../security/policy).
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+This package is open-sourced software licensed under the [MIT license](LICENSE.md).
