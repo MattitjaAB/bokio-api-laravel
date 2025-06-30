@@ -30,17 +30,18 @@ beforeEach(function () {
     });
 
     $this->client = new BokioClient('fake-token', '123456');
+    $this->customers = new Customer($this->client);
 });
 
 it('can fetch a list of customers from Bokio', function () {
-    $response = (new Customer($this->client))->all();
+    $response = $this->customers->all();
 
     expect($response->items[0]->name)->toBe('customer 1');
 });
 
 it('can fetch a single customer from Bokio', function () {
     $customerId = '55c899c5-82b2-47fa-9c51-e35fc9b26443';
-    $response = (new Customer($this->client))->get($customerId);
+    $response = $this->customers->get($customerId);
 
     expect($response->id)->toBe($customerId);
     expect($response->name)->toBe('customer 1');
@@ -71,7 +72,7 @@ it('can create a customer via Bokio API', function () {
         ],
     ];
 
-    $response = (new Customer($this->client))->create($data);
+    $response = $this->customers->create($data);
 
     expect($response->id)->toBe('generated-id');
     expect($response->name)->toBe('Testbolaget AB');
