@@ -14,8 +14,10 @@ class Customer
     /**
      * Get a list of all customers.
      */
-    public function all(?int $page = null, ?int $pageSize = null): object
-    {
+    public function all(
+        ?int $page = null,
+        ?int $pageSize = null
+    ): object {
         $query = [];
 
         if ($page !== null) {
