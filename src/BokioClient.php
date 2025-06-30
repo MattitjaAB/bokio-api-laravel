@@ -12,7 +12,7 @@ class BokioClient
     public function __construct(
         private string $accessToken,
         private string $companyId,
-        private string $baseUrl
+        private string $baseUrl = 'https://api.bokio.se'
     ) {
         $this->request = Http::acceptJson()
             ->asJson()
