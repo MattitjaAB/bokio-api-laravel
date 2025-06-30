@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Mattitja\BokioApiLaravel\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class BokioApiLaravelCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'bokio-api-laravel';
 
     public $description = 'My command';
 
