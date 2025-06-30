@@ -33,13 +33,13 @@ beforeEach(function () {
     $this->customers = new Customer($this->client);
 });
 
-it('can fetch a list of customers from Bokio', function () {
+it('can fetch a list of customers', function () {
     $response = $this->customers->all();
 
     expect($response->items[0]->name)->toBe('customer 1');
 });
 
-it('can fetch a single customer from Bokio', function () {
+it('can fetch a single customer', function () {
     $customerId = '55c899c5-82b2-47fa-9c51-e35fc9b26443';
     $response = $this->customers->get($customerId);
 
@@ -47,7 +47,7 @@ it('can fetch a single customer from Bokio', function () {
     expect($response->name)->toBe('customer 1');
 });
 
-it('can create a customer via Bokio API', function () {
+it('can create a customer', function () {
     $data = [
         'name' => 'Testbolaget AB',
         'type' => 'company',
