@@ -13,12 +13,19 @@ class Customer
     /**
      * Get a list of all customers.
      */
-    public function all(int $page = 1, int $pageSize = 25): object
+    public function all(?int $page = null, ?int $pageSize = null): object
     {
-        return $this->client->get('customers', [
-            'page' => $page,
-            'pageSize' => $pageSize,
-        ]);
+        $query = [];
+
+        if ($page !== null) {
+            $query['page'] = $page;
+        }
+
+        if ($pageSize !== null) {
+            $query['pageSize'] = $pageSize;
+        }
+
+        return $this->client->get('customers', $query);
     }
 
     public function get(string $customerId): object
