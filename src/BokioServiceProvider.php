@@ -10,7 +10,7 @@ class BokioServiceProvider extends PackageServiceProvider
     public function configurePackage(Package $package): void
     {
         $package
-            ->name('bokio-api-laravel')
+            ->name('bokio')
             ->hasConfigFile();
     }
 
