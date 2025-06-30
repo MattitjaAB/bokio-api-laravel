@@ -64,10 +64,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Mattitja\\BokioApiLaravel\\BokioApiLaravelServiceProvider"
+                "Mattitja\\BokioApiLaravel\\BokioServiceProvider"
             ],
             "aliases": {
-                "BokioApiLaravel": "Mattitja\\BokioApiLaravel\\Facades\\BokioApiLaravel"
+                "Bokio": "Mattitja\\BokioApiLaravel\\Facades\\Bokio"
             }
         }
     },
