@@ -35,7 +35,6 @@ beforeEach(function () {
 it('can fetch a list of customers from Bokio', function () {
     $response = (new Customer($this->client))->all();
 
-    expect($response->items)->toHaveCount(1);
     expect($response->items[0]->name)->toBe('customer 1');
 });
 

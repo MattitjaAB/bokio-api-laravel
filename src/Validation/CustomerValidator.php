@@ -11,7 +11,7 @@ class CustomerValidator
     {
         $validator = Validator::make($data, [
             'name' => 'required|string',
-            'type' => 'required|string',
+            'type' => 'required|string|in:company,private',
             'vatNumber' => 'nullable|string',
             'orgNumber' => 'nullable|string',
             'paymentTerms' => 'nullable|string',
