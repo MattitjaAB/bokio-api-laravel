@@ -3,7 +3,7 @@
 namespace Mattitja\BokioApiLaravel\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Mattitja\BokioApiLaravel\BokioApiLaravelServiceProvider;
+use Mattitja\BokioApiLaravel\BokioServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra
@@ -13,14 +13,14 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'Mattitja\\BokioApiLaravel\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn (string $modelName) => 'Mattitja\\Bokio\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            BokioApiLaravelServiceProvider::class,
+            BokioServiceProvider::class,
         ];
     }
 

@@ -2,4 +2,4 @@
 
 namespace Mattitja\BokioApiLaravel;
 
-class BokioApiLaravel {}
+class Bokio {}

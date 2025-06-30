@@ -5,12 +5,12 @@ namespace Mattitja\BokioApiLaravel\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Mattitja\BokioApiLaravel\BokioApiLaravel
+ * @see \Mattitja\BokioApiLaravel\Bokio
  */
-class BokioApiLaravel extends Facade
+class Bokio extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \Mattitja\BokioApiLaravel\BokioApiLaravel::class;
+        return \Mattitja\BokioApiLaravel\Bokio::class;
     }
 }
