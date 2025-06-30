@@ -3,6 +3,7 @@
 namespace Mattitja\BokioApiLaravel\Resources;
 
 use Mattitja\BokioApiLaravel\BokioClient;
+use Mattitja\BokioApiLaravel\Validation\CustomerValidator;
 
 class Customer
 {
@@ -31,5 +32,12 @@ class Customer
     public function get(string $customerId): object
     {
         return $this->client->get('customers/'.$customerId);
+    }
+
+    public function create(array $data): object
+    {
+        $validated = CustomerValidator::validate($data);
+
+        return $this->client->post('customers', $validated);
     }
 }

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Http;
 use Mattitja\BokioApiLaravel\BokioClient;
 use Mattitja\BokioApiLaravel\Resources\Customer;
+use Mattitja\BokioApiLaravel\Validation\CustomerValidator;
+use Illuminate\Validation\ValidationException;
 
 function loadFixture(string $path): array
 {
@@ -19,6 +21,10 @@ beforeEach(function () {
 
         if ($request->method() === 'GET' && str_contains($request->url(), '/customers')) {
             return Http::response(loadFixture('Customer/all.200.json'), 200);
+        }
+
+        if ($request->method() === 'POST' && str_contains($request->url(), '/customers')) {
+            return Http::response(loadFixture('Customer/create.201.json'), 201);
         }
 
         // fallback
@@ -41,4 +47,41 @@ it('can fetch a single customer from Bokio', function () {
 
     expect($response->id)->toBe($customerId);
     expect($response->name)->toBe('customer 1');
+});
+
+it('can create a customer via Bokio API', function () {
+    $data = [
+        'name' => 'Testbolaget AB',
+        'type' => 'company',
+        'vatNumber' => 'SE1234567890',
+        'orgNumber' => '556677-8899',
+        'paymentTerms' => '30',
+        'language' => 'sv',
+        'contactsDetails' => [
+            [
+                'name' => 'John Doe',
+                'email' => 'john@example.com',
+                'phone' => '0123456789',
+                'isDefault' => true,
+            ]
+        ],
+        'address' => [
+            'line1' => 'Testgatan 1',
+            'line2' => null,
+            'city' => 'Göteborg',
+            'postalCode' => '12345',
+            'country' => 'SE',
+        ],
+    ];
+
+    $response = (new Customer($this->client))->create($data);
+
+    expect($response->id)->toBe('generated-id');
+    expect($response->name)->toBe('Testbolaget AB');
+
+    Http::assertSent(function ($request) use ($data) {
+        return $request->method() === 'POST' &&
+            str_contains($request->url(), '/customers') &&
+            $request['name'] === $data['name'];
+    });
 });
